@@ -1,0 +1,79 @@
+A small box can contain 1 bit.
+
+example 1101 = 4 bits
+
+
+
+8 bits make 1 byte (1 byte = 8 bits)
+
+## Converting from Binary to Numbers
+
+0 1 0 1 1
+
+there the last digit on the right is the least significant digit and the last value on the left is the most significant digit.
+
+from the right, multiply by the number and raise to the poer of it's index. indexing starts from 0
+
+1 * 2^0 = 1
+1 * 2^1 = 2
+0 * 2^2 = 0
+1 * 2^3 = 8
+0 * 2^4 = 0
+
+sum the values = 11 (this is considered a decimal number or the number we know)
+
+## Hexadecimal Numbers
+
+0x456  Hexadecimal numbers always start with 0x to indicate that they are Hexadecimal numbers since they look more like the decimal numbers. 
+
+
+lets convert 0x456 to Binary
+
+6 * 16^0 = 1
+5 * 16^1 = 80
+4 * 16^2 = 1024   
+
+summing them will give 1110
+
+
+Hexadecimal Numbers are represented with 16 symbols which are 0 1 2 3 4 5 6 7 8 9 A B C D E F
+
+These representing numbers are more like saying 0 to 15. so A is simply 10, B is 11 and F is 15
+
+For Example; let us convert FA3C to base 2
+
+12 * 16^0 = 12
+3 * 16^1 = 48
+10 * 16^2 = 2560
+15 * 16^3 = 61440
+
+summing the whole values will give 64060
+
+** it is important to note that each Hexadecimal number is equal to 4 bits. so 4 binary numbers can be represented with one number
+
+0101 0101 0111 1101 0101 1111 0000 0001
+  5    5    7    D    5    F    0    1
+
+
+## CHARACTER SETS AND ENCODING
+
+Here we will be discussing on how to represent characters which are in conputer language which is binary since we know that the computer only understands binary.
+
+There are two main Character sets that are used which are Unicode and ASCII
+
+(1) Unicode : A standard for representing and encoding characters in most of the writing systems worldwide. it defines 149,813 characters (version 15.1). for example character "s" gets assigned number 115
+
+(2) ASCII : This is for English language only. only 128 characters. lower cxase and upper case of letters, numbers puntuations characters like delete DEL etc. ASCII characters only uses 8 bits to store things in our machine and you remeber that 8 bits is equal to 2 Hexadecimal value, because each Hexadecimal value is representing 4 bits. ASCII is very small when compared with Unicode. infact, it can be seen as a subset of Unicode.
+
+ENCODERS AND DECODERS
+
+Encoders turn things meaningful to us (Humans) into Zeros and Ones or Machine code as it may be called. This will help saving infomation to our device memory.
+
+Decoders turn Zeros and Ones to what humans can understand. it converts data so we can display it and make sence of it.
+
+CHARACTER ENCODING: A stytem of assingning a sequence of bytes (just zeros and ones) to a character. This is something built in our computer, it is not abstract. if it is not there, we can't even type text. The most common Character Encoder I know is utf-8, defined by the Unicode Standard, therefore its characters have the same number as Unicode. The most significant character for converted machine code by UTF-8 encoder is usually 0. remember utf-8 converts characters to machine code. it does so in 8 bits which is one bit. that is why we have 8 attached to it. Unicode are usually in Hexadecimal and Utf-8 converts it to machine code. 
+
+
+BUFFERS
+This is a container in memory. when you create a buffer in your code, you are going to allocate a piece of your memory. depending of how big that buffer is or the size your specified. it could be 4bytes which is 32bits or whatever. buffers act like arrays, they are similar, they have elements and these elements are numbered. and are indexed like arrays. the first element in a buffer has the index of 0. as soon as you create a memory, all elements will be filled with Zeros. Each elements in a buffer holds exactly 8bits which is 1byte. so each element will have 8 zeros when you create a buffer and also take note that you can't change this. so remember that they act like an array, you can reference your buffer object and used curly brackets to change the values or its elements or even get any element. but you can't change the size of the element. if a buffer is 32bits, you can't change it. This is an important thing to note. Buffers can be seen as data structures specifically designed for binary data. so saving a value in a buffer simply means you will be changing the initial zeros created while creating the buffer. remember not to create a buffer bigger than your computer RAM size. it is going to crash the computer. for example, you can't have 8 gig RAM laptop and be creating buffer of 16gigabyte. 
+
