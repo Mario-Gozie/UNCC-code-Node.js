@@ -31,3 +31,5 @@ console.log(buffS.toString("utf-8")); //here I am sying give me the string.
 
 const buffH = Buffer.from("Hi!", "utf-8"); // here I am saying take this as a string, convert as binary
 console.log(buffH.toString("utf-8")); //here I am sying give me the string.
+
+// TRYING TO HAVE MORE FUN WITH BUFFER
