@@ -23,3 +23,10 @@ for (let i = 0; i < buff.length; i++) {
     );
   }
 }
+
+// In Summary
+// There are two ways to allocate buffers which is with alloc and with allocUnsafe. but allocUnsafe is faster because it doesn't initalize all elements with Zero and it takes up the inital memory created by node if it is less than 4 gigabyte. Buffer.from() and Buffer.concat() will also take up memory that is created when node is initiated.
+
+// Let us look at "allocUnsafeSlow"
+
+const buf = Buffer.allocUnsafeSlow(2); // in this process, it will not make use of the space created by node. that is the main difference. the similarity is that it wont try to initialize that buffer.
