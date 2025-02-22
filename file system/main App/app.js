@@ -14,15 +14,15 @@
 
 // ******* Callback API **************//
 
-const fs = require("fs");
+// const fs = require("fs");
 
-fs.copyFile("file.txt", "copied-callback.txt", (error) => {
-  // while working with callbacks in node you pass in the error as a call back fucntion. this is a common practice in node.js.
-  if (error) console.log(error);
-});
+// fs.copyFile("file.txt", "copied-callback.txt", (error) => {
+//   // while working with callbacks in node you pass in the error as a call back fucntion. this is a common practice in node.js.
+//   if (error) console.log(error);
+// });
 
 // ******* Synchronous API *************//
 
-// const fs = require("fs");
+const fs = require("fs");
 
-// fs.copyFile("file.txt", "copied-sync.txt");
+fs.copyFileSync("file.txt", "copied-sync.txt"); // Sychronous API always have Sync attached to it. which is one of the difference between it and others. it doesnt have any kind of error handling at all so if anything goes wrong, the application stops.
