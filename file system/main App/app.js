@@ -2,23 +2,24 @@
 
 // **********Promise API ***********//
 
-const fs = require("fs/promises");
+// const fs = require("fs/promises");
 
-(async () => {
-  try {
-    await fs.copyFile("file.txt", "copied-promise.txt");
-  } catch (error) {
-    console.log(error);
-  }
-})();
+// (async () => {
+//   try {
+//     await fs.copyFile("file.txt", "copied-promise.txt");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })();
 
 // ******* Callback API **************//
 
-// const fs = require("fs");
+const fs = require("fs");
 
-// fs.copyFile("file.txt", "copied-callback.txt", (error) => {
-//   if (error) console.log(error);
-// });
+fs.copyFile("file.txt", "copied-callback.txt", (error) => {
+  // while working with callbacks in node you pass in the error as a call back fucntion. this is a common practice in node.js.
+  if (error) console.log(error);
+});
 
 // ******* Synchronous API *************//
 
