@@ -38,7 +38,7 @@ const fs = require("fs/promises");
         ); // here we are reading the file
 
         console.log("Bytes read", bytesRead);
-        console.log("Contents", buffer.toString());
+        console.log("Contents", buffer.toString("utf-8"));
       } else {
         console.log("File is empty");
       }
