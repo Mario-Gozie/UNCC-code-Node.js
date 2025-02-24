@@ -1,2 +1,1 @@
-Hey, Chigozirim is welcoming you!
-We all are also saying, Welcome!
+create a file \Users\MarioGozie\Desktop\test\a-new-file.js

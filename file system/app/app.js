@@ -2,6 +2,26 @@ const fs = require("fs/promises");
 // we would like to first watch changes hapening to the file.
 
 (async () => {
+  const createFile = async (path) => {
+    // checking if the file already exist
+    try {
+      const existingFileHandle = await fs.open(path, "r"); // we are not writing into the file but reading because we just want to check if it exists.
+
+      existingFileHandle.close(); // remember to close a file after opening it.
+
+      // if the file opens, we already have the file... so the return code will run.
+      return console.log(`The file ${path} already exists.`);
+    } catch (error) {
+      const newFileHandle = await fs.open(path, "w"); //this will create a new file if the file with the path does not exist.
+
+      console.log("A new file was successfully created");
+
+      newFileHandle.close();
+    }
+  };
+  // commands
+  const CREATE_FILE = "create a file";
+
   // Opening a file, which is nececesarry to read or write on a file
 
   const conmmandFileHandler = await fs.open("./command.txt", "r"); // The r there means I am only going to read the content
@@ -39,7 +59,15 @@ const fs = require("fs/promises");
       // Using a decoder
       // Decoder - This turns something that is meaningless to something that is meaningful.
       // encoder - this turns something that is menaingful to something that is meaningless.
-      console.log("Contents", buffer.toString("utf-8"));
+      const command = buffer.toString("utf-8");
+
+      // create a file:
+      // create a file <path>
+
+      if (command.includes(CREATE_FILE)) {
+        const filePath = command.substring(CREATE_FILE.length + 1); // this method will start from after "create a file" length and the space which is represented by 1. from that point till the end. "we are moving to the right."
+        createFile(filePath);
+      }
     } else {
       console.log("File is empty");
     }
