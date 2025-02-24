@@ -1,1 +1,1 @@
-create a file \Users\MarioGozie\Desktop\test\a-new-file.js
+create a file \Users\MarioGozie\Desktop\test\a-new-file.txt
