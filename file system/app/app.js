@@ -5,7 +5,7 @@ const fs = require("fs/promises");
   // commands
   const CREATE_FILE = "create a file";
 
-  const DELETE_FILE = "delete a file";
+  const DELETE_FILE = "delete the file";
 
   const RENAME_FILE = "rename the file";
 
@@ -105,6 +105,17 @@ const fs = require("fs/promises");
         const newFilePath = command.substring(_idx + 4);
 
         renameFile(oldFilePath, newFilePath);
+      }
+
+      // add to file
+      // add to the file <path> this content: <content>
+
+      if (command.includes(ADD_TO_FILE)) {
+        const _idx = command.indexOf(" this content: ");
+        const filePath = command.substring(ADD_TO_FILE.length + 1, _idx);
+        const content = command.substring(_idx + 15);
+
+        addToFile(filePath, content);
       }
     }
   });
