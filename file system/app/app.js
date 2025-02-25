@@ -88,8 +88,24 @@ const fs = require("fs/promises");
         const filePath = command.substring(CREATE_FILE.length + 1); // this method will start from after "create a file" length and the space which is represented by 1. from that point till the end. "we are moving to the right."
         createFile(filePath);
       }
-    } else {
-      console.log("File is empty");
+
+      // Delete a file.
+      // delete the file <path>
+      if (command.includes(DELETE_FILE)) {
+        const filePath = command.substring(DELETE_FILE.length + 1);
+        deleteFile(filePath);
+      }
+
+      // rename file:
+      // rename the file <path> to <path>
+
+      if (command.includes(RENAME_FILE)) {
+        const _idx = command.indexOf(" to ");
+        const oldFilePath = command.substring(RENAME_FILE.length + 1, _idx);
+        const newFilePath = command.substring(_idx + 4);
+
+        renameFile(oldFilePath, newFilePath);
+      }
     }
   });
 
@@ -101,13 +117,6 @@ const fs = require("fs/promises");
     if (event.eventType === "change") {
       //all file handle object are evebt emiiters.
       conmmandFileHandler.emit("change");
-    }
-
-    // Delete a file.
-    // delete the file <path>
-    if (command.includes(DELETE_FILE)) {
-      const filePath = command.substring(DELETE_FILE.length + 1);
-      deleteFile(filePath);
     }
   }
 })();
