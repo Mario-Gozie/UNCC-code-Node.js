@@ -2,6 +2,15 @@ const fs = require("fs/promises");
 // we would like to first watch changes hapening to the file.
 
 (async () => {
+  // commands
+  const CREATE_FILE = "create a file";
+
+  const DELETE_FILE = "delete a file";
+
+  const RENAME_FILE = "rename the file";
+
+  const ADD_TO_FILE = "add the the file";
+
   const createFile = async (path) => {
     // checking if the file already exist
     try {
@@ -19,8 +28,10 @@ const fs = require("fs/promises");
       newFileHandle.close();
     }
   };
-  // commands
-  const CREATE_FILE = "create a file";
+
+  const deleteFile = (path) => {
+    console.log(`Deleting ${path}...`);
+  };
 
   // Opening a file, which is nececesarry to read or write on a file
 
@@ -81,6 +92,13 @@ const fs = require("fs/promises");
     if (event.eventType === "change") {
       //all file handle object are evebt emiiters.
       conmmandFileHandler.emit("change");
+    }
+
+    // Delete a file.
+    // delete the file <path>
+    if (command.includes(DELETE_FILE)) {
+      const filePath = command.substring(DELETE_FILE.length + 1);
+      deleteFile(filePath);
     }
   }
 })();
