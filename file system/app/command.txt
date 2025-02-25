@@ -1,1 +1,1 @@
-rename the file \Users\MarioGozie\Desktop\test\a-new-file.txt to \Users\MarioGozie\Desktop\test\new-name.txt
+add to the file \Users\MarioGozie\Desktop\test\a-new-file.txt to \Users\MarioGozie\Desktop\test\new-name.txt this content: this is some text

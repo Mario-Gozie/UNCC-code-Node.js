@@ -9,7 +9,7 @@ const fs = require("fs/promises");
 
   const RENAME_FILE = "rename the file";
 
-  const ADD_TO_FILE = "add the the file";
+  const ADD_TO_FILE = "add to the file";
 
   const createFile = async (path) => {
     // checking if the file already exist
