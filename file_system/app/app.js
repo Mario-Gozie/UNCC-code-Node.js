@@ -29,8 +29,16 @@ const fs = require("fs/promises");
     }
   };
 
-  const deleteFile = (path) => {
-    console.log(`Deleting ${path}...`);
+  const deleteFile = async (path) => {
+    try {
+      await fs.unlink(path); // unlink function is used for deleting here but we could have also used the rm function. the mein difference between the two is that rm fuction has more power, it could delete more than one files and directories that are not empty. while unlink will delete only one file. rmdir is another function that you can use to delete directories only that are empty.
+    } catch (err) {
+      if (err.code === "ENOENT") {
+        console.log(`No file at this path to remove`);
+      } else {
+        console.log("An Error occured while removing the file.");
+      }
+    }
   };
 
   const renameFile = (oldPath, newPath) => {
