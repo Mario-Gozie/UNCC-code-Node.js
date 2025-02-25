@@ -33,6 +33,15 @@ const fs = require("fs/promises");
     console.log(`Deleting ${path}...`);
   };
 
+  const renameFile = (oldPath, newPath) => {
+    console.log(`Renaming ${oldPath} to ${newPath}...`);
+  };
+
+  const addToFile = (path, content) => {
+    console.log(`Adding to ${path}`);
+    console.log(`Content: ${content}`);
+  };
+
   // Opening a file, which is nececesarry to read or write on a file
 
   const conmmandFileHandler = await fs.open("./command.txt", "r"); // The r there means I am only going to read the content
