@@ -103,24 +103,43 @@ const fs = require("node:fs/promises");
 
   // 1000 bytes = 1 kilobyte
   // 1000 kilobytes = 1 megabyte
-  const buff = Buffer.alloc(16384, 10); // allocating a size to my buffer. and filling it with 10
-  console.log(stream.write(buff)); //This will return False because we are alocationg values that fill the internal buffer of the stream.
+  // const buff = Buffer.alloc(16383, 10); // allocating a size to my buffer. and filling it with 10
+  // console.log(stream.write(buff)); //This will return False because we are alocationg values that fill the internal buffer of the stream.
+  // console.log(stream.write(Buffer.alloc(1, "a")));
 
+  // // Drain event happens when an internal buffer is filled and it is emptied
+  // stream.on("drain", () => {
+  //   console.log(stream.write(Buffer.alloc(1, "a")));
+  //   console.log(stream.writableLength);
+
+  //   console.log("we are now safe to write more");
+  // });
   // console.log(buff);
 
-  setInterval(() => {}, 1000);
+  // setInterval(() => {}, 1000);
 
   // console.log(stream.writableLength); // this will definitely have a value
 
-  // for (let i = 0; i < 1000000; i++) {
-  //   // creating a buffer.
-  //   const buff = Buffer.from(` ${i} `, "utf-8");
-  //   // writing the buffer into the file.
-  //   stream.write(buff);
-  //   await fileHandle.write(` ${i} `);
-  // }
+  let i = 0;
+
+  const writeMany = () => {
+    while (i < 1000000) {
+      // creating a buffer.
+      const buff = Buffer.from(` ${i} `, "utf-8");
+
+      // writing the buffer into the file.
+      if (!stream.write(buff)) break;
+      i++;
+    }
+  };
+
+  writeMany();
+
+  stream.on("drain", () => {
+    writeMany();
+  });
 
   // console.timeEnd("writeMany");
 
-  fileHandle.close();
+  // fileHandle.close();
 })();
