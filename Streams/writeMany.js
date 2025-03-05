@@ -64,3 +64,20 @@ const fs = require("node:fs/promises");
 
   console.timeEnd("writeMany");
 })();
+
+/// STREAMS: This is an abstract interface for working with streaming data in Node.js. so this has to do with sending data in chuncks amd this is more efficient than sending everything once.
+
+// There is Writable stream
+// There is readable stream
+// We have duplex streams that do writin and reading.
+// we also have Transform stream (this is used for modifying data)
+
+// Understanding writeable and readable streams is the most important thing. others can be understood later.
+
+// When working with streams (Maybe writeable streams, you write a buffer to the stream and when it is filled, the data is passed on to the new location. A stream has some events, properties, and methods.)
+
+// Readable streams are used to read data, and can be created with fs.createReadStream which will create the readable stream object. it also has events, propeties and methods. it usuall has a buffer and data is pasd to the stream with stream.push(data) (remember that the data is a buffer) then the data is passed on to the new location with stream.on("data", (chunk)=>) the call back function now puts the data into the new location.
+
+// If you have a huge amount of data and you want to write it somewhere, it is adviceable to create a readable stream, read it then pass it to a writeable stream this improves use of memory.
+
+// A writeable stream and a readable steam has only one buffer but a duplex has two. A transform has two too. one for reading and one for writing.
