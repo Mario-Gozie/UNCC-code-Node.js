@@ -122,14 +122,16 @@ const fs = require("node:fs/promises");
 
   let i = 0;
 
+  const numberOfWrites = 10000000;
+
   const writeMany = () => {
-    while (i < 1000000) {
+    while (i < numberOfWrites) {
       // creating a buffer.
       const buff = Buffer.from(` ${i} `, "utf-8");
 
       // this is our last write
 
-      if (i === 999999) {
+      if (i === numberOfWrites - 1) {
         return stream.end(buff); // this is used when we are done with a stream
       }
 
