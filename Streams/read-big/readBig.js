@@ -1,0 +1,11 @@
+const fs = require("node:fs/promises");
+
+(async () => {
+  const fileHandleRead = await fs.open("test.txt", "r");
+
+  const stream = fileHandleRead.createReadStream();
+
+  stream.on("data", (chunk) => {
+    console.log(chunk);
+  });
+})();
