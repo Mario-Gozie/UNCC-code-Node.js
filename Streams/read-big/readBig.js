@@ -10,6 +10,8 @@ const fs = require("node:fs/promises");
   const streamWrite = fileHandleWrite.createWriteStream();
 
   streamRead.on("data", (chunk) => {
+    const numbers = chunk.toString("utf-8").split("  "); // converting each chunk into an array
+    console.log(numbers);
     if (!streamWrite.write(chunk)) {
       streamRead.pause(); // So what we are saying here is that if the write stream buffer is full, pause reading so no data will be recieved.
     }
