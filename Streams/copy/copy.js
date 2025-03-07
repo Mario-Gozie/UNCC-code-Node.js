@@ -1,3 +1,4 @@
+const { pipeline } = require("node:stream");
 const fs = require("node:fs/promises");
 
 // (async () => {
@@ -41,9 +42,35 @@ const fs = require("node:fs/promises");
   const readStream = srcFile.createReadStream();
   const writeStream = destFile.createWriteStream();
 
-  // pipes read and write. it handles backpressuring and drain activities. etc.
-  // piping must move from a writeable stream to a readable stream.
-  readStream.pipe(writeStream);
+  // console.log(readStream.readableFlowing); // This is used to check if the data is being read
 
-  console.timeEnd("copy");
+  // // pipes read and write. it handles backpressuring and drain activities. etc.
+
+  // // piping must move from a writeable stream to a readable stream.
+  // readStream.pipe(writeStream);
+
+  // console.log(readStream.readableFlowing); // This will show true because data is being read here.
+
+  // readStream.unpipe(writeStream); // unpipe basically remove the destination which is the file we are writting to.
+
+  // console.log(readStream.readableFlowing); // This will show false because unpipe has removed the writing stream above.
+
+  // // if you pipe and unpipe, the stream will resume from where it stopped
+  // readStream.pipe(writeStream);
+
+  // console.log(readStream.readableFlowing);
+
+  // // This can be implemented when reading is done.
+  // readStream.on("end", () => {
+  //   console.timeEnd("copy");
+  // });
+
+  // USING PIPELINE. This takes th readable and writeable strem then the error callback function.
+
+  pipeline(readStream, writeStream, (err) => {
+    console.log(err); // this will show undefined if there is no error
+    console.timeEnd("copy");
+  });
 })();
+
+// pipeline is better to be used than pipe because it does error handling. This usually call the stream.destroy(err) on all streams to destroy it after piping is done.
