@@ -1,6 +1,7 @@
 const fs = require("node:fs/promises");
 
 (async () => {
+  console.time("readBig");
   const fileHandleRead = await fs.open("text-small.txt", "r");
   const fileHandleWrite = await fs.open("dest.txt", "w");
 
@@ -42,5 +43,9 @@ const fs = require("node:fs/promises");
     streamRead.resume(); // here I am saying that after draining, start readin so that data will be recieved.
   });
 
-  //   stream.on("end", () => {});
+  // Note that the readable stream has the End event while the writeable stream has the finish Event, and the finish event is called after calling the calling the end event.
+  streamRead.on("end", () => {
+    console.log("Done Reading");
+    console.timeEnd("readBig");
+  });
 })();
