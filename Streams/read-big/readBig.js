@@ -1,7 +1,7 @@
 const fs = require("node:fs/promises");
 
 (async () => {
-  const fileHandleRead = await fs.open("src.txt", "r");
+  const fileHandleRead = await fs.open("text-small.txt", "r");
   const fileHandleWrite = await fs.open("dest.txt", "w");
 
   const streamRead = fileHandleRead.createReadStream({
@@ -28,13 +28,14 @@ const fs = require("node:fs/promises");
       split = numbers.pop();
     }
 
-    console.log(numbers);
-    if (!streamWrite.write(chunk)) {
-      streamRead.pause(); // So what we are saying here is that if the write stream buffer is full, pause reading so no data will be recieved.
-    }
-
-    // console.log("---------------");
-    // console.log(chunk.length);
+    numbers.forEach((num) => {
+      let n = +num;
+      if (n % 10 === 0) {
+        if (!streamWrite.write(" " + n + " ")) {
+          streamRead.pause(); // So what we are saying here is that if the write stream buffer is full, pause reading so no data will be recieved.
+        }
+      }
+    });
   });
 
   streamWrite.on("drain", () => {
