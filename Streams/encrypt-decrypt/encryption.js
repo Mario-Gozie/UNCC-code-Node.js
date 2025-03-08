@@ -17,6 +17,7 @@ class Encrypt extends Transform {
     try {
       for (let i = 0; i < chunk.length; ++i) {
         if (chunk[i] !== 255) {
+          // adding 1 to all the values so no one will understand the data.
           chunk[i] = chunk[i] + 1;
         }
       }
