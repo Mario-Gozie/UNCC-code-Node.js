@@ -1,7 +1,14 @@
 const net = require("net"); // including the net module
 // This is the lowest level of the networking module. all other module are built on top of this. such as the http module, etc.
 
-const server = net.createServer((socket) => {}); // where the server is created.
+const server = net.createServer((socket) => {
+  // The socket is actually connections. if any body connects to my server, it will come in as a socket. and socket is a stream and it is a duplex stream. so it can read and write
+
+  socket.on("data", (data) => {
+    // here, the socket listens for data, accepts the data, convert it to string and render it to the console.
+    console.log(data.toString("utf-8"));
+  });
+}); // where the server is created.
 
 server.listen(3099, "127.0.0.1", () => {
   console.log("opened server on", server.address());
