@@ -6,7 +6,7 @@ const server = net.createServer((socket) => {
 
   socket.on("data", (data) => {
     // here, the socket listens for data, accepts the data, convert it to string and render it to the console.
-    console.log(data.toString("utf-8"));
+    console.log(data);
   });
 }); // where the server is created.
 
