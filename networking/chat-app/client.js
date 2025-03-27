@@ -25,6 +25,8 @@ const moveCusor = (dx, dy) => {
   });
 };
 
+let id;
+
 const socket = net.createConnection(
   { host: "127.0.0.1", port: 3008 },
   async () => {
@@ -44,11 +46,20 @@ const socket = net.createConnection(
     ask();
 
     socket.on("data", async (data) => {
-      // data us received
       console.log(); // creating an empty line
       moveCusor(0, -1); // moving cursor up
       await clearLine(0); // clearing the left content of the message which is the massage asking to enter value
-      console.log(data.toString("utf-8")); // logging the data
+
+      //when we are getting the id ...
+      // checking if the first two characters of the data is id, so you can Identify the data recieved as an Id.
+      if (data.toString("utf-8").substring(0, 2) === "id") {
+        id = data.toString("utf-8").substring(3); // this is goint to gettting only the id which is everything from the third character.
+
+        console.log(`Your id is ${id}!`);
+        console.log();
+      } else {
+        console.log(data.toString("utf-8")); // logging the data
+      }
       ask(); // asking the ask measage to come up
     });
   }
