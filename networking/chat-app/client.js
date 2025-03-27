@@ -40,7 +40,7 @@ const socket = net.createConnection(
       // clear the current line that the cursor is in
       await clearLine(0);
 
-      socket.write(message);
+      socket.write(`${id}-message-${message}`);
     };
 
     ask();
