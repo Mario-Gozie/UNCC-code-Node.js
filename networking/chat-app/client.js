@@ -7,20 +7,52 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+// Here I am converting call back version of a method to a promise
+
+const clearLine = (dir) => {
+  return new Promise((resolve, reject) => {
+    process.stdout.clearLine(dir, () => {
+      resolve();
+    });
+  });
+};
+
+const moveCusor = (dx, dy) => {
+  return new Promise((resolve, reject) => {
+    process.stdout.moveCursor(dx, dy, () => {
+      resolve();
+    });
+  });
+};
+
 const socket = net.createConnection(
   { host: "127.0.0.1", port: 3008 },
   async () => {
     console.log("connected to the server!");
 
-    const message = await rl.question("Enter a message > ");
+    const ask = async () => {
+      const message = await rl.question("Enter a message > ");
 
-    socket.write(message);
+      await moveCusor(0, -1); // here, I am saying move dont move my cusor horizontally (0), but vertically (-1)
+
+      // clear the current line that the cursor is in
+      await clearLine(0);
+
+      socket.write(message);
+    };
+
+    ask();
+
+    socket.on("data", async (data) => {
+      // data us received
+      console.log(); // creating an empty line
+      moveCusor(0, -1); // moving cursor up
+      await clearLine(0); // clearing the left content of the message which is the massage asking to enter value
+      console.log(data.toString("utf-8")); // logging the data
+      ask(); // asking the ask measage to come up
+    });
   }
 );
-
-socket.on("data", (data) => {
-  console.log(data.toString("utf-8"));
-});
 
 socket.on("end", () => {
   console.log("Ended!");
