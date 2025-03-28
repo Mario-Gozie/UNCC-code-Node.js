@@ -70,13 +70,19 @@ socket.on("end", () => {
 });
 
 // Handle errors on the socket
-socket.on("error", (err) => {
-  //   console.error("socket error:", err);
+// socket.on("error", (err) => {
+//   //   console.error("socket error:", err);
 
-  // Check for ECONNRESET and handle it separately
-  if (err.code === "ECONNRESET") {
-    console.log("The server has closed the connection unexpectedly.");
-  } else {
-    console.log("An error occurred:", err.message);
-  }
-});
+//   // Check for ECONNRESET and handle it separately
+//   if (err.code === "ECONNRESET") {
+//     console.log("The server has closed the connection unexpectedly.");
+//   } else {
+//     console.log("An error occurred:", err.message);
+//   }
+// });
+
+// process.on("SIGINT", () => {
+//   socket.write(`User ${id} has left the chat!`); // Send a message to the server before exiting
+//   socket.end(); // Close the socket properly
+//   process.exit(); // Exit the process
+// });

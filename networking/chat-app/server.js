@@ -11,6 +11,12 @@ server.on("connection", async (socket) => {
 
   const clientId = clients.length + 1;
 
+  // Broadcasting a message when someone joins a chat room
+
+  clients.map((client) => {
+    client.socket.write(`User ${clientId} joined!`);
+  });
+
   socket.write(`id-${clientId}`);
 
   socket.on("data", (data) => {
@@ -24,6 +30,14 @@ server.on("connection", async (socket) => {
   });
 
   clients.push({ id: clientId.toString(), socket }); // passed in an object into the clients array. so we will be having an array of objects where there is an Id and also a socket.
+
+  socket.on("error", () => {
+    // Broadcasting a message to everyone when someone leaves a chat room
+
+    clients.map((client) => {
+      client.socket.write(`User ${clientId} left!`);
+    });
+  });
 });
 
 server.listen(3008, "127.0.0.1", () => {
