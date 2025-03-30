@@ -82,7 +82,7 @@ class fileWriteStream extends Writable {
 
   let i = 0;
 
-  const numberOfWrites = 1000000;
+  const numberOfWrites = 500000000;
 
   const writeMany = () => {
     while (i < numberOfWrites) {
