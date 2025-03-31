@@ -19,7 +19,7 @@ server.on("connection", (socket) => {
       fileHandle = await fs.open(`storage/${fileName}`, "w");
       fileWriteStream = fileHandle.createWriteStream(); // stream to write to
 
-      // Writing to our destination file
+      // Writing to our destination file, discard the headers
       fileWriteStream.write(data.subarray(indexOfDivider + 7));
 
       socket.resume();

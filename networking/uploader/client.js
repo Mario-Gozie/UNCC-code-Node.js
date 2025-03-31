@@ -10,6 +10,11 @@ const socket = net.createConnection({ host: "::1", port: 5050 }, async () => {
   const fileName = path.basename(filePath); // getting just the file name.
   const fileHandle = await fs.open(filePath, "r");
   const fileReadStream = fileHandle.createReadStream(); // stream to read from
+  const fileSize = (await fileHandle.stat()).size;
+
+  // For showing the upload progress
+  let uploadedPercentage = 0;
+  let bytesUploaded = 0;
 
   socket.write(`fileName: ${fileName}-------`); // writing to the server
   // Reading from the source file.
@@ -18,6 +23,15 @@ const socket = net.createConnection({ host: "::1", port: 5050 }, async () => {
       // Checking if the internal buffer of a stream is filled.
       console.log(`client stream buffer filled/backpressuring`);
       fileReadStream.pause();
+    }
+
+    bytesUploaded += data.length; // added the number of bytes read to the variable
+
+    let newPercentage = Math.floor((bytesUploaded / fileSize) * 100);
+
+    if (newPercentage % 5 === 0 && newPercentage !== uploadedPercentage) {
+      uploadedPercentage = newPercentage;
+      console.log(`Uploading... ${uploadedPercentage}%`);
     }
   });
 
