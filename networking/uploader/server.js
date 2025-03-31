@@ -20,7 +20,7 @@ server.on("connection", (socket) => {
       fileWriteStream = fileHandle.createWriteStream(); // stream to write to
 
       // Writing to our destination file
-      fileWriteStream.write(data);
+      fileWriteStream.write(data.subarray(indexOfDivider + 7));
 
       socket.resume();
 
