@@ -1,12 +1,17 @@
 const net = require("net");
 const fs = require("node:fs/promises");
+const path = require("path");
 
 const socket = net.createConnection({ host: "::1", port: 5050 }, async () => {
-  console.log(process.argv);
-  const filePath = "./test.txt";
+  console.log(process.argv); // This will reveal everything specified while running this software in an array. in other words, all arguments in the process. so if I am running the code with "node client.js". The node path will be the first content of the array while the client.js path will be the second content of the array.
+
+  const filePath = process.argv[2]; // getting the third value of the array which is its the specified file name
+
+  const fileName = path.basename(filePath); // getting just the file name.
   const fileHandle = await fs.open(filePath, "r");
   const fileReadStream = fileHandle.createReadStream(); // stream to read from
 
+  socket.write(`fileName: ${fileName}-------`); // writing to the server
   // Reading from the source file.
   fileReadStream.on("data", (data) => {
     if (!socket.write(data)) {

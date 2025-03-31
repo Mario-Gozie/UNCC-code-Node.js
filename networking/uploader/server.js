@@ -12,7 +12,11 @@ server.on("connection", (socket) => {
     // Checking if fileHandle is open and if it is I write directly. if it is not, I open before I write.
     if (!fileHandle) {
       socket.pause(); // pause recieving data from the client
-      fileHandle = await fs.open(`storage/test.txt`, "w");
+
+      const indexOfDivider = data.indexOf("-------");
+      const fileName = data.subarray(10, indexOfDivider).toString("utf-8"); // we used toString here because we know that the data will be a buffer normally we can run some array functions on them.
+
+      fileHandle = await fs.open(`storage/${fileName}`, "w");
       fileWriteStream = fileHandle.createWriteStream(); // stream to write to
 
       // Writing to our destination file
