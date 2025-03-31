@@ -1,6 +1,25 @@
 const net = require("net");
 const fs = require("node:fs/promises");
+
 const path = require("path");
+
+const clearLine = (dir) => {
+  return new Promise((resolve, reject) => {
+    process.stdout.clearLine(dir, () => {
+      resolve();
+    });
+  });
+};
+
+const moveCursor = (dx, dy) => {
+  return new Promise((resolve, reject) => {
+    process.stdout.moveCursor(dx, dy, () => {
+      resolve();
+    });
+  });
+};
+
+console.log(); // just an empty line to get space.
 
 const socket = net.createConnection({ host: "::1", port: 5050 }, async () => {
   console.log(process.argv); // This will reveal everything specified while running this software in an array. in other words, all arguments in the process. so if I am running the code with "node client.js". The node path will be the first content of the array while the client.js path will be the second content of the array.
@@ -18,7 +37,7 @@ const socket = net.createConnection({ host: "::1", port: 5050 }, async () => {
 
   socket.write(`fileName: ${fileName}-------`); // writing to the server
   // Reading from the source file.
-  fileReadStream.on("data", (data) => {
+  fileReadStream.on("data", async (data) => {
     if (!socket.write(data)) {
       // Checking if the internal buffer of a stream is filled.
       console.log(`client stream buffer filled/backpressuring`);
@@ -29,8 +48,10 @@ const socket = net.createConnection({ host: "::1", port: 5050 }, async () => {
 
     let newPercentage = Math.floor((bytesUploaded / fileSize) * 100);
 
-    if (newPercentage % 5 === 0 && newPercentage !== uploadedPercentage) {
+    if (newPercentage !== uploadedPercentage) {
       uploadedPercentage = newPercentage;
+      await moveCursor(0, -1);
+      await clearLine(0);
       console.log(`Uploading... ${uploadedPercentage}%`);
     }
   });

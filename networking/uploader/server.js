@@ -3,10 +3,10 @@ const fs = require("node:fs/promises");
 
 const server = net.createServer(() => {});
 
-let fileHandle, fileWriteStream; // These things are defined there to avoid scope issue. in other words, using it within a function.
-
 server.on("connection", (socket) => {
   console.log("New Connection!");
+
+  let fileHandle, fileWriteStream; // These things are defined there to avoid scope issue. in other words, using it within a function.
 
   socket.on("data", async (data) => {
     // Checking if fileHandle is open and if it is I write directly. if it is not, I open before I write.

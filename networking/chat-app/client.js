@@ -17,7 +17,7 @@ const clearLine = (dir) => {
   });
 };
 
-const moveCusor = (dx, dy) => {
+const moveCursor = (dx, dy) => {
   return new Promise((resolve, reject) => {
     process.stdout.moveCursor(dx, dy, () => {
       resolve();
@@ -35,7 +35,7 @@ const socket = net.createConnection(
     const ask = async () => {
       const message = await rl.question("Enter a message > ");
 
-      await moveCusor(0, -1); // here, I am saying move dont move my cusor horizontally (0), but vertically (-1)
+      await moveCursor(0, -1); // here, I am saying move dont move my cusor horizontally (0), but vertically (-1)
 
       // clear the current line that the cursor is in
       await clearLine(0);
@@ -68,4 +68,3 @@ const socket = net.createConnection(
 socket.on("end", () => {
   console.log("Ended!");
 });
-
