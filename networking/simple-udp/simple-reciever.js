@@ -7,7 +7,7 @@ reciever.on("message", (message, remoteInfo) => {
   // remote info indicates source ip address, famil, port, size.
   console.log(
     `Server got: ${message} from ${remoteInfo.address}:${remoteInfo.port}`
-  );
+  ); // you may get a weird port from this area because when a client make a request from a server. it assigns dynamic addresses. there is a range of dynamic addresses which are 49152 to 65535.
 });
 
 // Two different protocols can listen to the same port. for example, having TCP and UDP listening on the same port.
