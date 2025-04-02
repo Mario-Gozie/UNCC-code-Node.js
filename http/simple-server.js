@@ -31,6 +31,13 @@ server.on("request", (request, response) => {
 
     console.log(data);
     console.log(name);
+
+    response.writeHead(200, { "content-type": "application/json" });
+    response.end(
+      JSON.stringify({
+        message: `Post with title ${data.title} was created by ${name}`,
+      })
+    );
   });
 });
 

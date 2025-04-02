@@ -20,6 +20,21 @@ const request = http.request({
 // This event is emitted only once
 request.on("response", (response) => {
   // reading the response happens here.
+
+  console.log("----------------STATUS: ------------------------");
+  console.log(response.statusCode);
+
+  console.log("----------------HEADERS: ------------------------");
+  console.log(response.headers);
+
+  console.log("----------------BODY: ------------------------");
+  response.on("data", (chunk) => {
+    console.log(chunk.toString("utf-8"));
+
+    response.on("end", () => {
+      console.log("No more data in response");
+    });
+  });
 });
 
 request.end(
