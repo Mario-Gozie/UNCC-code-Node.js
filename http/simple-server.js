@@ -19,8 +19,18 @@ server.on("request", (request, response) => {
   // REMEMBER: Request is a readable stream
   console.log("----------------BODY: ------------------------");
 
+  let data = "";
   request.on("data", (chunk) => {
-    console.log(chunk.toString("utf-8"));
+    data += chunk.toString("utf-8");
+  });
+
+  const name = request.headers.name;
+
+  request.on("end", () => {
+    data = JSON.parse(data);
+
+    console.log(data);
+    console.log(name);
   });
 });
 

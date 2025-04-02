@@ -13,10 +13,7 @@ const request = http.request({
   path: "/create-post",
   headers: {
     "content-type": "application/json",
-    "Content-length": Buffer.byteLength(
-      JSON.stringify({ message: "Hey you still there?" }),
-      "utf-8"
-    ),
+    name: "Joe",
   },
 });
 
@@ -25,10 +22,9 @@ request.on("response", (response) => {
   // reading the response happens here.
 });
 
-// request.write(JSON.stringify({ message: "Hi there!" }));
-// request.write(JSON.stringify({ message: "How are you doing?" }));
-request.write(JSON.stringify({ message: "Hey you still there?" }));
-
-// request.end(
-//   JSON.stringify({ message: "This is going to be my last message!" })
-// );
+request.end(
+  JSON.stringify({
+    title: "Title of my post",
+    body: "This is my text and more and more.",
+  })
+);
