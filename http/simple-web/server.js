@@ -1,13 +1,16 @@
 const http = require("node:http");
-const fs = require("fs/promises");
+const fs = require("node:fs/promises");
 
 const server = http.createServer();
 
-server.on("request", (request, response) => {
+server.on("request", async (request, response) => {
   if (request.url === "/" && request.method === "GET") {
     response.setHeader("Content-Type", "text/html");
 
-    response.write("");
+    const fileHandle = await fs.open("./public/index.html", "r");
+    const fileStream = fileHandle.createReadStream();
+
+    fileStream.pipe(response); // pipe reads from the readable stream and writes to the response and it automatically handles draining
   }
   console.log(request.method);
 });
