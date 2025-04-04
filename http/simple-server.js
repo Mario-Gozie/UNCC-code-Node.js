@@ -22,6 +22,7 @@ server.on("request", (request, response) => {
   let data = "";
   request.on("data", (chunk) => {
     data += chunk.toString("utf-8");
+    console.log(data);
   });
 
   const name = request.headers.name;
