@@ -12,7 +12,24 @@ server.on("request", async (request, response) => {
 
     fileStream.pipe(response); // pipe reads from the readable stream and writes to the response and it automatically handles draining
   }
-  console.log(request.method);
+
+  if (request.url === "/styles.css" && request.method === "GET") {
+    response.setHeader("Content-Type", "text/css");
+
+    const fileHandle = await fs.open("./public/styles.css", "r");
+    const fileStream = fileHandle.createReadStream();
+
+    fileStream.pipe(response); // pipe reads from the readable stream and writes to the response and it automatically handles draining
+  }
+
+  if (request.url === "/scripts.js" && request.method === "GET") {
+    response.setHeader("Content-Type", "text/javascript");
+
+    const fileHandle = await fs.open("./public/scripts.js", "r");
+    const fileStream = fileHandle.createReadStream();
+
+    fileStream.pipe(response); // pipe reads from the readable stream and writes to the response and it automatically handles draining
+  }
 });
 
 server.listen(9000, () => {
