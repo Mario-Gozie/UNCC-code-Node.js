@@ -58,7 +58,7 @@ server.on("request", async (request, response) => {
   }
 
   // upload route
-  if (request.url == "/upload" && request.method === "POST") {
+  if (request.url == "/upload" && request.method === "PUT") {
     const fileHandle = await fs.open("./storage/image.jpeg", "w");
     response.setHeader("Content-Type", "application/json");
     response.statusCode = 200;
