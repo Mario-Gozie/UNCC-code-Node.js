@@ -58,6 +58,21 @@ server.on("request", async (request, response) => {
   }
 
   // upload route
+  if (request.url == "/upload" && request.method === "POST") {
+    const fileHandle = await fs.open("./storage/image.jpeg", "w");
+    response.setHeader("Content-Type", "application/json");
+    response.statusCode = 200;
+
+    const fileStream = fileHandle.createWriteStream();
+
+    request.pipe(fileStream);
+
+    request.on("end", () => {
+      response.end(
+        JSON.stringify({ message: "file was uploaded successfully!" })
+      );
+    });
+  }
 });
 
 server.listen(9000, () => {
