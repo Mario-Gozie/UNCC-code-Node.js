@@ -1,4 +1,4 @@
-const Butter = require("./butter");
+const Butter = require("../butter");
 
 const PORT = 4060;
 const server = new Butter();
