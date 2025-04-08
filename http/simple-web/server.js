@@ -15,6 +15,10 @@ server.route("get", "/scripts.js", (req, res) => {
   res.sendFile("./public/scripts.js", "text/javascript");
 });
 
+server.route("post", "/login", (req, res) => {
+  res.status(400).json({ message: "Bad login info." });
+});
+
 server.listen(PORT, () => {
   console.log(`Server has started on port ${PORT}`);
 });
