@@ -3,7 +3,7 @@ const Butter = require("./butter");
 const PORT = 4060;
 const server = new Butter();
 
-server.routes("get", "/", (req, res) => {
+server.route("get", "/", (req, res) => {
   res.sendFile("./public/index.html", "text/html");
 });
 

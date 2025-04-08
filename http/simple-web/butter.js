@@ -29,14 +29,15 @@ class Buttter {
         return res;
       };
 
+      // send a Json data back to the client (for small json data, less than the highWaterMark) eg res.writeableHighWaterMark or req.readableHighWaterMark (which is just how much a buffer can contain)
       res.json = (data) => {
         res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(data));
+        res.end(JSON.stringify(data)); // we are writing to this end here because the Json file is less than the highwatermark value so there is no need to create streams.
       };
 
       // if the routes object does not have a key of req.method + req.url, return 404
 
-      if (!this.routes[req.method.toLocaleLowerCase() + req.url](req, res)) {
+      if (!this.routes[req.method.toLocaleLowerCase() + req.url]) {
         return res
           .status(404)
           .json({ error: `Cannot ${req.method} ${req.url}` });
