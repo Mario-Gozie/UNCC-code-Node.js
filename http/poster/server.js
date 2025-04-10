@@ -6,7 +6,7 @@ const USERS = [
   { id: 3, name: "Ben Adams", username: "ben.poet", password: "string" },
 ];
 
-const POST = [
+const POSTS = [
   {
     id: 1,
     title: "This is a post title",
@@ -36,7 +36,14 @@ server.route("get", "/scripts.js", (req, res) => {
 // --------- JSON ROUTE ---------------------
 
 server.route("get", "/api/posts", (req, res) => {
-  res.status(200).json(POST);
+  const posts = POSTS.map((post) => {
+    const user = USERS.find((user) => user.id === post.id); // Checking if user id matches post user id.
+
+    post.author = user.name; // setting the authour to the based on the post user id.
+
+    return post;
+  });
+  res.status(200).json(posts);
 });
 
 server.listen(PORT, () => {
