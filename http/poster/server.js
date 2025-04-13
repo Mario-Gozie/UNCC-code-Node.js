@@ -48,8 +48,23 @@ server.route("post", "/api/login", (req, res) => {
     body = JSON.parse(body);
 
     console.log(body);
+    const username = body.username;
+    const password = body.password;
+
+    // Check if the user exist
+    const user = USERS.find((user) => user.username === username);
+
+    if (user && user.password === password) {
+      // At this point, we know that the client is who they say they are;
+
+      res.status(200).json({ message: "Logged in successfully!" });
+    } else {
+      res.status(401).json({ error: "Invalid username or password. " });
+    }
   });
 });
+
+server.route("get", "/api/user", (req, res) => {});
 
 // send a list of all posts
 server.route("get", "/api/posts", (req, res) => {
