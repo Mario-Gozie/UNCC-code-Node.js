@@ -24,6 +24,9 @@ const server = new Butter();
 server.route("get", "/", (req, res) => {
   res.sendFile("./public/index.html", "text/html");
 });
+server.route("get", "/login", (req, res) => {
+  res.sendFile("./public/index.html", "text/html");
+});
 
 server.route("get", "/styles.css", (req, res) => {
   res.sendFile("./public/styles.css", "text/css");
