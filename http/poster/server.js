@@ -38,6 +38,20 @@ server.route("get", "/scripts.js", (req, res) => {
 
 // --------- JSON ROUTE ---------------------
 
+server.route("post", "/api/login", (req, res) => {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString("utf-8");
+  });
+
+  req.on("end", () => {
+    body = JSON.parse(body);
+
+    console.log(body);
+  });
+});
+
+// send a list of all posts
 server.route("get", "/api/posts", (req, res) => {
   const posts = POSTS.map((post) => {
     const user = USERS.find((user) => user.id === post.id); // Checking if user id matches post user id.
