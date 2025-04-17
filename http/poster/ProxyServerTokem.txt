@@ -1,0 +1,7 @@
+A company or firm can have more than one server in different locations to help manage different requests. This is very common. So in such case there is a load balancer called proxy whose work is to distribute requests to these different servers. 
+
+REMEMBER THAT HTTP REQUEST IS STATELESS
+
+In a case where there are 3 servers, A client may have his first request sent to server1 and the the next sent to server2. You might be wondering how does these different servers identify the user. well, when the first request is sent to the database (usually login request.) by these servers, a session table is created which usually contain the unique Identifier (login detail) and then a special token. this token will be sent back to the client within the response head through the load balancer (proxy) and it will be stored in the client table (environment). with this token all servers can be able to identify who is making a request in subsequent cases.
+
+You might also be wondering how and where the client may be saving that token. well, if the client is a just a node.js client, they could save the token in a file and read that file in following casses of http request. However, in a case where it will be a web browser which is true for most cases, We would save it as cookies.

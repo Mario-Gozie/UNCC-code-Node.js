@@ -78,6 +78,6 @@ server.route("get", "/api/posts", (req, res) => {
   res.status(200).json(posts);
 });
 
-// server.listen(PORT, () => {
-//   console.log("Server has started on port " + PORT);
-// });
+server.listen(PORT, () => {
+  console.log("Server has started on port " + PORT);
+});
