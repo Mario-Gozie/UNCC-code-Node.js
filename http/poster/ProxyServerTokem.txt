@@ -5,3 +5,29 @@ REMEMBER THAT HTTP REQUEST IS STATELESS
 In a case where there are 3 servers, A client may have his first request sent to server1 and the the next sent to server2. You might be wondering how does these different servers identify the user. well, when the first request is sent to the database (usually login request.) by these servers, a session table is created which usually contain the unique Identifier (login detail) and then a special token. this token will be sent back to the client within the response head through the load balancer (proxy) and it will be stored in the client table (environment). with this token all servers can be able to identify who is making a request in subsequent cases.
 
 You might also be wondering how and where the client may be saving that token. well, if the client is a just a node.js client, they could save the token in a file and read that file in following casses of http request. However, in a case where it will be a web browser which is true for most cases, We would save it as cookies.
+
+HTTP COOKIES
+
+This is one way of save a piece of data to a client browser so that the browser can send the server that data in subsequent requests. so this is a convention, once a browser recieves cookies, it will send that in following requests.
+
+Sending cookies by server is easy to do just like other headers. 
+
+200 OK
+Set-cookie: token = ab23$I; 
+Set-cookie: card_id = 32AI;
+Expires = Sun, 1 Jan 2024 12:00:00 GMT;
+HttpOnly;
+secure;
+
+
+body
+
+All you need to do is is the Set-Cookie header, give the cookie a name and then equate to the value. one set-cookie should be for one value if you need more than one cookie, you will have to use two different set-cookie header. when a cookie or cookies are sent to a browser, by default, in subsequent requests, it is sent to the server.
+
+You can also specify expiry date for cookies. because you dont want to save cookies throughout life within a browser. 
+
+Cookies can actually be modified but when HttpOnly is specified, JavaScript cant modify it. 
+
+There is also Secure property for adding security
+
+There is the path property which when specified it means that all request matching that path, the browser will send the Cookies.
