@@ -1,5 +1,10 @@
 const Butter = require("../butter");
 
+// A sample object in this array would look like:
+// {userId : 1, token: 23230384}
+
+const SESSIONS = [];
+
 const USERS = [
   { id: 1, name: "Liam Brown", username: "liam23", password: "string" },
   { id: 2, name: "Meredith Green", username: "marit.sky", password: "string" },
@@ -38,6 +43,8 @@ server.route("get", "/scripts.js", (req, res) => {
 
 // --------- JSON ROUTE ---------------------
 
+// Log a User in and give them a token.
+
 server.route("post", "/api/login", (req, res) => {
   let body = "";
   req.on("data", (chunk) => {
@@ -56,6 +63,8 @@ server.route("post", "/api/login", (req, res) => {
 
     if (user && user.password === password) {
       // At this point, we know that the client is who they say they are;
+
+      const token = Math.floor(Math.random() * 100000000000).toString(); //generating a random number, flooring it and converting it to string as a token.
 
       res.status(200).json({ message: "Logged in successfully!" });
     } else {
