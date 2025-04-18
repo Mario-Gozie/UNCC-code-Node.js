@@ -32,6 +32,9 @@ server.route("get", "/", (req, res) => {
 server.route("get", "/login", (req, res) => {
   res.sendFile("./public/index.html", "text/html");
 });
+server.route("get", "/profile", (req, res) => {
+  res.sendFile("./public/index.html", "text/html");
+});
 
 server.route("get", "/styles.css", (req, res) => {
   res.sendFile("./public/styles.css", "text/css");
@@ -64,7 +67,12 @@ server.route("post", "/api/login", (req, res) => {
     if (user && user.password === password) {
       // At this point, we know that the client is who they say they are;
 
+      // generate random 10 digit token
       const token = Math.floor(Math.random() * 100000000000).toString(); //generating a random number, flooring it and converting it to string as a token.
+
+      SESSIONS.push({ userId: user, token: token });
+
+      res.setHeader("Set-Cookie", `token = ${token}; path=/`); // Here I am saying set the token as part of the header for and send to the browser. then it should be returned for every request that has "/" that is why the path is there.
 
       res.status(200).json({ message: "Logged in successfully!" });
     } else {
@@ -73,7 +81,18 @@ server.route("post", "/api/login", (req, res) => {
   });
 });
 
-server.route("get", "/api/user", (req, res) => {});
+server.route("get", "/api/user", (req, res) => {
+  const token = req.headers.cookie.split("=")[1]; // get the token which will return something like token=28923612593. split it on the equal sighn and grab the value at position 1
+  console.log(token);
+
+  const session = SESSIONS.find((session) => session.token === token); //checking if a token match a perticular id in the session and returning that particular object of the array.
+
+  if (session) {
+    console.log("Sending user info...");
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+});
 
 // send a list of all posts
 server.route("get", "/api/posts", (req, res) => {
