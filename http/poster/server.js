@@ -71,6 +71,7 @@ server.route("post", "/api/login", (req, res) => {
       const token = Math.floor(Math.random() * 100000000000).toString(); //generating a random number, flooring it and converting it to string as a token.
 
       SESSIONS.push({ userId: user.id, token: token });
+      console.log(SESSIONS);
 
       res.setHeader("Set-Cookie", `token = ${token}; path=/`); // Here I am saying set the token as part of the header for and send to the browser. then it should be returned for every request that has "/" that is why the path is there.
 
@@ -96,7 +97,7 @@ server.route("get", "/api/user", (req, res) => {
     const user = USERS.find((user) => user.id === session.userId);
     console.log("user = ", user);
 
-    // res.json({ username: user.username, name: user.name });
+    res.json({ username: user.username, name: user.name });
   } else {
     res.status(401).json({ error: "Unauthorized" });
   }
