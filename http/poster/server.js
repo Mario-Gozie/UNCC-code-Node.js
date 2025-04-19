@@ -82,6 +82,8 @@ server.route("post", "/api/login", (req, res) => {
   });
 });
 
+server.route("delete", "/api/logout", (req, res) => {});
+
 // Send User Info
 
 server.route("get", "/api/user", (req, res) => {
@@ -90,18 +92,18 @@ server.route("get", "/api/user", (req, res) => {
 
   const session = SESSIONS.find((session) => session.token === token); //checking if a token match a perticular id in the session and returning that particular object of the array.
 
-  console.log("session =", session);
-
   if (session) {
     // Sending user profile info
     const user = USERS.find((user) => user.id === session.userId);
-    console.log("user = ", user);
 
     res.json({ username: user.username, name: user.name });
   } else {
     res.status(401).json({ error: "Unauthorized" });
   }
 });
+
+// Update a user info
+server.route("put", "/api/user", (req, res) => {});
 
 // send a list of all posts
 server.route("get", "/api/posts", (req, res) => {
@@ -114,6 +116,10 @@ server.route("get", "/api/posts", (req, res) => {
   });
   res.status(200).json(posts);
 });
+
+// Create a new post
+
+server.route("post", "/api/logout", (req, res) => {});
 
 server.listen(PORT, () => {
   console.log("Server has started on port " + PORT);
