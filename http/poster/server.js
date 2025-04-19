@@ -70,7 +70,7 @@ server.route("post", "/api/login", (req, res) => {
       // generate random 10 digit token
       const token = Math.floor(Math.random() * 100000000000).toString(); //generating a random number, flooring it and converting it to string as a token.
 
-      SESSIONS.push({ userId: user, token: token });
+      SESSIONS.push({ userId: user.id, token: token });
 
       res.setHeader("Set-Cookie", `token = ${token}; path=/`); // Here I am saying set the token as part of the header for and send to the browser. then it should be returned for every request that has "/" that is why the path is there.
 
@@ -81,14 +81,22 @@ server.route("post", "/api/login", (req, res) => {
   });
 });
 
+// Send User Info
+
 server.route("get", "/api/user", (req, res) => {
   const token = req.headers.cookie.split("=")[1]; // get the token which will return something like token=28923612593. split it on the equal sighn and grab the value at position 1
   console.log(token);
 
   const session = SESSIONS.find((session) => session.token === token); //checking if a token match a perticular id in the session and returning that particular object of the array.
 
+  console.log("session =", session);
+
   if (session) {
-    console.log("Sending user info...");
+    // Sending user profile info
+    const user = USERS.find((user) => user.id === session.userId);
+    console.log("user = ", user);
+
+    // res.json({ username: user.username, name: user.name });
   } else {
     res.status(401).json({ error: "Unauthorized" });
   }
