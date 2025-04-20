@@ -24,6 +24,12 @@ const PORT = 8000;
 
 const server = new Butter();
 
+// Creating MiddleWare.
+
+server.beforeEach((req, res) => {});
+server.beforeEach((req, res) => {});
+server.beforeEach((req, res) => {});
+
 // ------------------Files Routes ---------------------------- //
 
 server.route("get", "/", (req, res) => {
