@@ -26,13 +26,27 @@ const server = new Butter();
 
 // Creating MiddleWare.
 
-server.beforeEach((req, res) => {});
-server.beforeEach((req, res) => {});
-server.beforeEach((req, res) => {});
+server.beforeEach((req, res, next) => {
+  console.log("This is the middleware function!");
+  next();
+});
+
+server.beforeEach((req, res, next) => {
+  setTimeout(() => {
+    console.log("This is the second middleware function!");
+    next();
+  }, 2000);
+});
+
+server.beforeEach((req, res, next) => {
+  console.log("This is the third middleware function!");
+  next();
+});
 
 // ------------------Files Routes ---------------------------- //
 
 server.route("get", "/", (req, res) => {
+  console.log("This is the / route");
   res.sendFile("./public/index.html", "text/html");
 });
 server.route("get", "/login", (req, res) => {

@@ -12,6 +12,7 @@ class Buttter {
      * }
      */
     this.routes = {};
+    this.middleware = [];
 
     this.server.on("request", (req, res) => {
       // Send a file back to the client
@@ -35,19 +36,45 @@ class Buttter {
         res.end(JSON.stringify(data)); // we are writing to this end here because the Json file is less than the highwatermark value so there is no need to create streams.
       };
 
-      // if the routes object does not have a key of req.method + req.url, return 404
+      // run all the middleware functions before running the corresponding route
 
-      if (!this.routes[req.method.toLocaleLowerCase() + req.url]) {
-        return res
-          .status(404)
-          .json({ error: `Cannot ${req.method} ${req.url}` });
-      }
-      this.routes[req.method.toLocaleLowerCase() + req.url](req, res);
+      // this.middleware[0](req, res, () => {
+      //   this.middleware[1](req, res, () => {
+      //     this.middleware[2](req, res, () => {
+      //       this.routes[req.method.toLocaleLowerCase() + req.url](req, res);
+      //     });
+      //   });
+      // });
+
+      const runMiddleware = (req, res, middleware, index) => {
+        // Out exit point ...
+        if (index === this.middleware.length) {
+          // if the routes object does not have a key of req.method + req.url, return 404
+
+          if (!this.routes[req.method.toLocaleLowerCase() + req.url]) {
+            return res
+              .status(404)
+              .json({ error: `Cannot ${req.method} ${req.url}` });
+          }
+
+          this.routes[req.method.toLocaleLowerCase() + req.url](req, res);
+        } else {
+          middleware[index](req, res, () => {
+            runMiddleware(req, res, middleware, index + 1);
+          });
+        }
+      };
+
+      runMiddleware(req, res, this.middleware, 0);
     });
   }
 
   route(method, path, cb) {
     this.routes[method + path] = cb;
+  }
+
+  beforeEach(cb) {
+    this.middleware.push(cb);
   }
 
   listen(port, cb) {
